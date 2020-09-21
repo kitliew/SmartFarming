@@ -1,13 +1,19 @@
 #!/usr/bin/env python3
 
-import mysql.connector
-import sys
+# Save script on each RPI0W
+# This script contain two part
+#   1. Will create table if device/table_name not in database
+#   2. Insert value to database
+# need import module/write a script to transfer Arduino converted readings
 
+
+import mysql.connector
+#TODO import arduino_converted_reading
 
 # create table named "IP/custom name"
 table_name = "SmartFarm_Alpha"
 
-# connect to mysql SmartFarming database
+# establish connection (SmartFarming database/mysql)
 mydb = mysql.connector.connect(
   host="192.168.0.142", # IP address hosting the MySQL
   user="smartfarming",  # MySQL username
@@ -15,9 +21,11 @@ mydb = mysql.connector.connect(
   database="SmartFarming"
 )
 
-# execute 2 command
-# command 1 create table if not exists (DATE: YYYY-MM-DD, TIME: hh:mm:ss)
-command1 = """CREATE TABLE IF NOT EXISTS `{}` (
+# creating a cursor object using the cursor() method
+mycursor = mydb.cursor()
+
+# preparing SQL query to CREATE TABLE into the database.
+sql = """CREATE TABLE IF NOT EXISTS `{}` (
 Device TEXT,
 Date DATE,
 Time TIME,
@@ -27,18 +35,25 @@ pH FLOAT,
 Temperature FLOAT
 );
 """.format(table_name)
-# command 2 insert/sensors value
-command2 = """INSERT INTO `{}` VALUES ();""".format(table_name) # TODO: add sensors variable
 
-
-mycursor = mydb.cursor()
-mycursor.execute(command1)
-print(mycursor)
+# execute the SQL command
+mycursor.execute(sql)
 
 
 
+# SQL query to INSERT VALUES into table
+sensor_sql = """INSERT INTO `{}` VALUES (%s);""".format(table_name) # TODO: add sensors variable
+sensor_values = ()
 
-sys.exit()
-mycursor.execute(command1)
+try:
+  # execute the SQL command
+  mycursor.execute(sensor_sql, sensor_values)
 
+  # commit changes in database
+  mydb.commit()
 
+except:
+  # Rolling back in case of error
+  mydb.rollback()
+
+mydb.close()
