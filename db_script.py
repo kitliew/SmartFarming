@@ -18,6 +18,13 @@ user="smartfarming"   # MySQL username
 password="smartfarming"   # MySQL password
 database="SmartFarming"   # MySQL database name
 
+# establish connection (SmartFarming database/mysql)
+mydb = mysql.connector.connect(
+  host=host,  # IP address hosting the MySQL
+  user=user,  # MySQL username
+  password=password,  # MySQL pass
+  database=database
+)
 
 class Farmer(object):
 
@@ -25,14 +32,6 @@ class Farmer(object):
   user = user
   password = password
   database = database
-
-  # establish connection (SmartFarming database/mysql)
-  mydb = mysql.connector.connect(
-    host=host,  # IP address hosting the MySQL
-    user=user,  # MySQL username
-    password=password,  # MySQL pass
-    database=database
-  )
 
   def __init__(self, device):
     self.farmer = device    # will be used as table name
@@ -59,7 +58,7 @@ class Farmer(object):
 
   def insert_meter_values(self, sensors):
     # SQL query to INSERT VALUES into table
-    sensor_sql = """INSERT INTO `{}` VALUES (%s);""".format(table_name) # TODO: add sensors variable
+    sensor_sql = """INSERT INTO `{}` VALUES (%s);""".format(self.farmer) # TODO: add sensors variable
 
     # creating a cursor object using the cursor() method
     mycursor = mydb.cursor()
