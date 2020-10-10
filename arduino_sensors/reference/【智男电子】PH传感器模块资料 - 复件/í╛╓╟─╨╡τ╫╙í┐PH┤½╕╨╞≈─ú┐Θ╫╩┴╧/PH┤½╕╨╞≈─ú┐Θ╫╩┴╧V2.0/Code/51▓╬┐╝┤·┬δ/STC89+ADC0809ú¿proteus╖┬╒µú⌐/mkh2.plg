@@ -1,0 +1,17 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Project:</h2>
+F:\店铺资料更改后\【智男电子】PH传感器模块资料\PH传感器模块资料V2.0\Code\51参考代码\STC89+ADC0809（proteus仿真）\mkh2.uvproj
+Project File Date:  06/06/2019
+
+<h2>Output:</h2>
+Build target 'Target 1'
+compiling main.c...
+compiling adc0809.c...
+compiling 1602.c...
+linking...
+Program Size: data=35.0 xdata=0 code=2059
+creating hex file from "mkh2"...
+"mkh2" - 0 Error(s), 0 Warning(s).

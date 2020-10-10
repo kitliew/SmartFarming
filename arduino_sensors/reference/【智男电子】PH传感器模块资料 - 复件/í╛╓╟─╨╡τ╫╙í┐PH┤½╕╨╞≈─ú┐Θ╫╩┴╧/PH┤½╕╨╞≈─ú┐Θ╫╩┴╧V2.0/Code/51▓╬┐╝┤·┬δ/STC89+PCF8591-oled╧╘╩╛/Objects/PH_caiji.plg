@@ -1,0 +1,49 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Project:</h2>
+F:\店铺资料更改后\【智男电子】PH传感器模块资料\PH传感器模块资料V2.0\Code\51参考代码\STC89+PCF8591-oled显示\PH_caiji.uvproj
+Project File Date:  06/06/2019
+
+<h2>Output:</h2>
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling PCF8591.c...
+compiling PH_caiji.c...
+compiling I2C.c...
+compiling oled.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DACCONVERSION?PCF8591
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?OLED_DISPLAY_ON?OLED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?OLED_DISPLAY_OFF?OLED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OLED_SHOWNUM?OLED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OLED_DRAWBMP?OLED
+Program Size: data=53.2 xdata=0 code=5375
+creating hex file from ".\Objects\PH_caiji"...
+".\Objects\PH_caiji" - 0 Error(s), 5 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling PCF8591.c...
+compiling PH_caiji.c...
+compiling I2C.c...
+compiling oled.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DACCONVERSION?PCF8591
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?OLED_DISPLAY_ON?OLED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?OLED_DISPLAY_OFF?OLED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OLED_SHOWNUM?OLED
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_OLED_DRAWBMP?OLED
+Program Size: data=53.2 xdata=0 code=5375
+creating hex file from ".\Objects\PH_caiji"...
+".\Objects\PH_caiji" - 0 Error(s), 5 Warning(s).

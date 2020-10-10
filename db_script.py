@@ -15,7 +15,7 @@ date_now, time_now = time.strftime('%Y-%m-%d %H:%M:%S').split()
 
 class Farmer(object):
     # global variable
-    host = "192.168.0.142"  # IP address hosting the MySQL
+    host = "192.168.0.143"  # IP address hosting the MySQL
     user = "smartfarming"  # MySQL username
     password = "smartfarming"  # MySQL password
     database = "SmartFarming"  # MySQL database name
@@ -36,20 +36,18 @@ class Farmer(object):
 
         # preparing SQL query to CREATE TABLE into the database.
         sql = """CREATE TABLE IF NOT EXISTS `{}` (
-    Device TEXT,
-    Date DATE,
-    Time TIME,
-    EC FLOAT,
-    Humidity INT,
-    pH FLOAT,
-    Temperature FLOAT
-    );
-    """.format(self.farmer)
+            Device TEXT,
+            Date DATE,
+            Time TIME,
+            EC FLOAT,
+            Humidity INT,
+            pH FLOAT,
+            Temperature FLOAT
+            );
+            """.format(self.farmer)
 
         # execute the SQL command
         mycursor.execute(sql)
-        # log/report table name created in database.
-        print("{} table created in MySQL {} database".format(self.farmer, self.database))
 
     def insert_meter_values(self, sensors):
         # SQL query to INSERT VALUES into table
