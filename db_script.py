@@ -15,7 +15,7 @@ date_now, time_now = time.strftime('%Y-%m-%d %H:%M:%S').split()
 
 class Farmer(object):
     # global variable
-    host = "192.168.0.143"  # IP address hosting the MySQL
+    host = "192.168.0.142"  # IP address hosting the MySQL  #TODO CHANGE IP
     user = "smartfarming"  # MySQL username
     password = "smartfarming"  # MySQL password
     database = "SmartFarming"  # MySQL database name

@@ -55,7 +55,7 @@ void loop()
 {
     char cmd[10];
     static unsigned long timepoint = millis();
-    if(millis()-timepoint>1000U){                            //time interval: 60s
+    if(millis()-timepoint>60000U){                            //time interval: 60s
         timepoint = millis();
         temperature = readTemperature();                   // read your temperature sensor to execute temperature compensation
         voltagePH = analogRead(PH_PIN)/1024.0*5000;          // read the ph voltage

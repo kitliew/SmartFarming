@@ -15,8 +15,10 @@ import os
 arduino_port = '/dev/ttyUSB0'  # usually ttyUSB* or ttyACM*
 baud = 115200
 
-# current date and time
-date_now, time_now = time.strftime('%Y-%m-%d %H:%M:%S').split()
+def current_datetime():
+    # current date and time
+    date_now, time_now = time.strftime('%Y-%m-%d %H:%M:%S').split()
+    return date_now, time_now
 
 if __name__ == "__main__":
     while not os.path.exists(arduino_port):
@@ -44,6 +46,7 @@ if __name__ == "__main__":
             # arduino output format "pH: 7.42 , EC: 0.00 ms/cm, Temperature: 25.69 °C"
             ph, ec, temperature = line[1::3]
 
+            date_now, time_now = current_datetime()
             # Output tuple(Device, Date, Time, EC, Humidity, pH, Temperature)
             test = Farmer("JOE")
             sensors = ("JOE1", date_now, time_now, float(ec), 100, float(ph), float(temperature))
@@ -52,6 +55,7 @@ if __name__ == "__main__":
             # test1 = Farmer("JOE2")
             # sensors = ("JOE2", date_now, time_now, 1, 2, 3, 28)
             # test1.insert_meter_values(sensors)
+
             #
             # test.mydb.close()
 
