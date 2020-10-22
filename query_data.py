@@ -22,7 +22,11 @@ mydb = mysql.connector.connect(
 mycursor = mydb.cursor()
 
 mycursor.execute("USE SmartFarming")
-mycursor.execute("SELECT * from JOE")
 
-for i in mycursor:
-    print(i)
+def last_data():
+    sql = "SELECT * FROM JOE ORDER BY DateTime DESC LIMIT 1;"
+    mycursor.execute(sql)
+    for i in mycursor:
+        print(i)
+
+print(last_data())

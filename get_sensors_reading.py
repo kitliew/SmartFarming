@@ -7,18 +7,13 @@
 # Output tuple(Device, Date, Time, EC, Humidity, pH, Temperature)
 
 from db_script import Farmer
-import time
 import serial.tools.list_ports
+import time
 import os
 
 # arduino parameter, assign serial device name if known
 arduino_port = '/dev/ttyUSB0'  # usually ttyUSB* or ttyACM*
 baud = 115200
-
-def current_datetime():
-    # current date and time
-    date_now, time_now = time.strftime('%Y-%m-%d %H:%M:%S').split()
-    return date_now, time_now
 
 if __name__ == "__main__":
     while not os.path.exists(arduino_port):
@@ -46,10 +41,9 @@ if __name__ == "__main__":
             # arduino output format "pH: 7.42 , EC: 0.00 ms/cm, Temperature: 25.69 °C"
             ph, ec, temperature = line[1::3]
 
-            date_now, time_now = current_datetime()
-            # Output tuple(Device, Date, Time, EC, Humidity, pH, Temperature)
+            # Output tuple(Device, DateTime, EC, Humidity, pH, Temperature)
             test = Farmer("JOE")
-            sensors = ("JOE1", date_now, time_now, float(ec), 100, float(ph), float(temperature))
+            sensors = ("JOE1", time.strftime('%Y-%m-%d %H:%M:%S'), float(ec), 100, float(ph), float(temperature))
             test.insert_meter_values(sensors)
             #
             # test1 = Farmer("JOE2")

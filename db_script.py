@@ -6,11 +6,7 @@
 #   2. Insert value to database
 
 
-import time
 import mysql.connector
-
-# current date and time
-date_now, time_now = time.strftime('%Y-%m-%d %H:%M:%S').split()
 
 
 class Farmer(object):
@@ -37,8 +33,7 @@ class Farmer(object):
         # preparing SQL query to CREATE TABLE into the database.
         sql = """CREATE TABLE IF NOT EXISTS `{}` (
             Device TEXT,
-            Date DATE,
-            Time TIME,
+            DateTime DATETIME,
             EC FLOAT,
             Humidity INT,
             pH FLOAT,
