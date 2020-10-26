@@ -10,7 +10,13 @@
 	<h3> ph  ==>  {{ ph  }} %</h3>
 	<h3> temperature  ==>  {{ temperature  }} oC</h3>
 	<hr>
-	<h3> Last Sensors Reading: {{ date_time }} ==> <a href="/"class="button">REFRESH</a></h3>
+	<h3> Last Sensors Reading: {{ date_time }} ==> <a href="/" class="button">REFRESH</a></h3>
+	<hr>
+	<h3> HISTORICAL DATA </h3>
+	<p>Enter number of samples to retrieve: <form method="POST"><input name="numSamples" value = {{numSamples}}><input type="submit"></form></p>
+	<hr>
+	<img src="/plot/temperature" alt="Image Placeholder" width="20%">
+	<img src="/plot/ph" alt="Image Placeholder" width="20%">
 	<hr>
    </body>
 </html>
