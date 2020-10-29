@@ -4,7 +4,7 @@
 # This script contain two part
 #   1. Will create table if device/table_name not in database
 #   2. Insert value to database
-
+# --------------------------------------------------------------------------------------------------------------------------
 
 import mysql.connector
 
@@ -24,7 +24,9 @@ class Farmer(object):
         database=database
     )
 
+
     def __init__(self, device):
+
         self.farmer = device  # will be used as table name
 
         # creating a cursor object using the cursor() method
@@ -44,8 +46,11 @@ class Farmer(object):
         # execute the SQL command
         mycursor.execute(sql)
 
+
     def insert_meter_values(self, sensors):
-        # SQL query to INSERT VALUES into table
+        """Insert values into SQL database table"""
+
+        # SQL command
         sensor_sql = """INSERT INTO `{}` VALUES {};""".format(self.farmer, sensors)
 
         # creating a cursor object using the cursor() method
