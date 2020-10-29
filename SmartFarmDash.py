@@ -7,6 +7,9 @@ import plotly.graph_objects as go
 import pandas as pd
 import mysql.connector
 
+#TODO https://dash-docs.herokuapp.com/dash-core-components
+#TODO dcc.DatePickerRange
+
 app = dash.Dash(__name__)
 
 # -----------------------------------------------------------------------------------------------
@@ -90,7 +93,7 @@ def update_graph(option_slctd_month, option_slctd_sensor):
     dff = dff[dff["Month"] == option_slctd_month]
 
     # Plotly Express
-    fig = px.scatter(dff, x=dff["DateTime"], y=dff[option_slctd_sensor], color=dff["Name"], trendline="lowess")
+    fig = px.scatter(dff, x=dff["DateTime"], y=dff[option_slctd_sensor], color=dff["Name"])
     return fig
 
 
