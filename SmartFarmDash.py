@@ -14,7 +14,7 @@ app = dash.Dash(__name__)
 
 # -----------------------------------------------------------------------------------------------
 # Import and clean data (import mysql into pandas)
-host = "192.168.0.143"  # IP address hosting the MySQL  #TODO change ip address
+host = "192.168.0.142"  # IP address hosting the MySQL  #TODO change ip address
 user = "smartfarming"  # MySQL username
 password = "smartfarming"  # MySQL password
 database = "SmartFarming"  # MySQL database name
@@ -29,6 +29,7 @@ mydb = mysql.connector.connect(
 mycursor = mydb.cursor()
 mycursor.execute("USE SmartFarming")
 
+#TODO define function in another file, import them
 def getsqlData():
     sql = "SELECT * FROM JOE ORDER BY DateTime DESC "
     mycursor.execute(sql)
@@ -36,56 +37,86 @@ def getsqlData():
     df = pd.DataFrame(data, columns=["Name", "DateTime", "EC", "Humidity", "pH", "Temperature"])
     return df
 
+def get24hsqlData():
+    sql = """SELECT * FROM `JOE` WHERE 
+        DateTime >= NOW() - INTERVAL 1 DAY
+        ORDER BY DateTime DESC;"""
+    mycursor.execute(sql)
+    data = mycursor.fetchall()
+    df = pd.DataFrame(data, columns=["Name", "DateTime", "EC", "Humidity", "pH", "Temperature"])
+    return df
+
+def df24h_min_max(sensor):
+    df = get24hsqlData()
+    high = df[str(sensor)].max()
+    low = df[str(sensor)].min()
+    current = df[str(sensor)].iloc[0]
+    return low, current, high
+
 
 # -----------------------------------------------------------------------------------------------
 # App layout
-app.layout = html.Div([
-
-    html.H1("SmartFarming Dashboards", style={"text-align": "center"}),
-
-    dcc.Dropdown(id="slct_month",
-                 options=[
-                     {"label": "JAN", "value": 1},
-                     {"label": "FEB", "value": 2},
-                     {"label": "MAR", "value": 3},
-                     {"label": "APR", "value": 4},
-                     {"label": "MAY", "value": 5},
-                     {"label": "JUN", "value": 6},
-                     {"label": "JUL", "value": 7},
-                     {"label": "AUG", "value": 8},
-                     {"label": "SEP", "value": 9},
-                     {"label": "OCT", "value": 10},
-                     {"label": "NOV", "value": 11},
-                     {"label": "DEC", "value": 12}],
-                 multi=False,
-                 value=10,
-                 style={"width":"30%", "display": "inline-block"}
-                 ),
-    dcc.Dropdown(id="slct_sensor",
-                 options=[
-                     {"label": "EC", "value": "EC"},
-                     {"label": "Humidity", "value": "Humidity"},
-                     {"label": "pH", "value": "pH"},
-                     {"label": "Temperature", "value": "Temperature"}],
-                 multi=False,
-                 value="Temperature",
-                 style={"width":"30%", "display": "inline-block"}
-                 ),
-    dcc.Graph(id="env_graph")
-
-    ])
-
+app.layout = html.Div(
+    children=[
+        html.Div(
+            className="row",
+            children=[
+                # Column for icons (homepage, settings etc)
+                html.Div(
+                    className="two columns div-sidebar-menu",
+                    children=[
+                        html.H2("Home"),
+                        html.H2("Settings"),
+                        html.H2("Others")
+                    ]
+                ),
+                # Column for app grids and graph
+                html.Div(
+                    className="ten columns div-for-sensors",
+                    children=[
+                        dcc.Dropdown(
+                            id="slct_month",
+                            options=[
+                                         {"label": "JAN", "value": 1},
+                                         {"label": "FEB", "value": 2},
+                                         {"label": "MAR", "value": 3},
+                                         {"label": "APR", "value": 4},
+                                         {"label": "MAY", "value": 5},
+                                         {"label": "JUN", "value": 6},
+                                         {"label": "JUL", "value": 7},
+                                         {"label": "AUG", "value": 8},
+                                         {"label": "SEP", "value": 9},
+                                         {"label": "OCT", "value": 10},
+                                         {"label": "NOV", "value": 11},
+                                         {"label": "DEC", "value": 12}],
+                            multi=False,
+                            value=10
+                        ),
+                        dcc.Tabs(id="sensors_graph_tabs", value="Temperature", children=[
+                            dcc.Tab(label="EC", value="EC"),
+                            dcc.Tab(label="Humidity", value="Humidity"),
+                            dcc.Tab(label="pH", value="pH"),
+                            dcc.Tab(label="Temperature", value="Temperature")
+                        ]),
+                        dcc.Graph(id="tab_content_graph"),
+                    ]
+                )
+            ]
+        )
+    ]
+)
 
 # -----------------------------------------------------------------------------------------------
 # Connect the Plotly graphs with Dash Components
+
+# Graph for tabs
 @app.callback(
-    Output(component_id="env_graph", component_property="figure"),
+    Output(component_id="tab_content_graph", component_property="figure"),
     [Input(component_id="slct_month", component_property="value"),
-     Input(component_id="slct_sensor", component_property="value")]
+     Input(component_id="sensors_graph_tabs", component_property="value")],
 )
 def update_graph(option_slctd_month, option_slctd_sensor):
 
-    container = "The month chosen by user was: {}".format(option_slctd_month)
 
     dff = getsqlData()
     dff["Month"] = pd.DatetimeIndex(dff["DateTime"]).month
